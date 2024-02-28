@@ -132,6 +132,14 @@ def calcular():
             okB3.grid(padx = 50, pady = 10)
 
         else:
+
+            tela_resultado = customtkinter.CTkToplevel()
+            tela_resultado.attributes('-topmost', True)
+            customtkinter.set_appearance_mode("dark")
+            customtkinter.set_default_color_theme("dark-blue")
+            tela_resultado.geometry("400x500")
+            tela_resultado.title("Resultado")
+
             expressao = str(equacao._text)
 
             expressao = expressao.replace("∧", "and").replace("V", "or").replace("→", "=>").replace("↔", "=").replace("⊻", "xor").replace("↓", "nor").replace("↑", "nand")
@@ -147,12 +155,24 @@ def calcular():
             if "D" in str(equacao._text):
                 variaveis = ["A","B","C","D"]
 
+            tabela_vdd = ttg.Truths(variaveis, [expressao])
             
-            frame5 = customtkinter.CTkFrame(tela_calculadora)
-            frame5.grid(row=10, column=0, columnspan=2, pady=10)
+            frame5 = customtkinter.CTkFrame(tela_resultado)
+            frame5.grid(padx = 100, pady = 10)
 
-            label_resultado = customtkinter.CTkLabel(frame5, text=ttg.Truths(variaveis, [expressao]))
-            label_resultado.pack(padx=10, pady=10)
+            label_resultado = customtkinter.CTkLabel(frame5, text= tabela_vdd)
+            label_resultado.grid(row=0, column=3, padx=10, pady=10)
+
+            text_tcc = tabela_vdd.valuation().replace("Contingency", "Contingência").replace("Tautology", "Tautologia").replace("Contradiction", "Contradição")
+
+            tcc = customtkinter.CTkLabel(frame5, text= text_tcc)
+            tcc.grid(row=1, column=3, padx=10, pady=10)
+
+            def fechar_r():
+                tela_resultado.destroy()
+            
+            but_sair = customtkinter.CTkButton(frame5, text= "Voltar", command= fechar_r)
+            but_sair.grid(row=2, column=3, padx=10, pady=10)
 
     except:
         
@@ -172,6 +192,7 @@ def calcular():
 
         okB4 = customtkinter.CTkButton(tela_erro4, text = "OK!", command= fechar4)
         okB4.grid(padx = 50, pady = 10)
+
 
 #-Frame------------------------------------------------------------------------------------------------------------------------
 
