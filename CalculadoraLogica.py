@@ -175,6 +175,8 @@ def calcular():
             but_sair.grid(row=2, column=3, padx=10, pady=10)
 
     except:
+
+        tela_resultado.destroy()
         
         tela_erro4 = customtkinter.CTkToplevel()
         tela_erro4.attributes('-topmost', True)
